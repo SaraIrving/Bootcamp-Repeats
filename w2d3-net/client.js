@@ -1,5 +1,5 @@
 const conn = net. createConnection({
-  host: "SERVER IP ADDRESS HERE", 
+  host: "localhost", 
   port: 3000
 });
 
