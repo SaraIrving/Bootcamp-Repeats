@@ -5,7 +5,17 @@ const PORT = 8080;
 
 const requestHandler = function(request, response) {
   console.log('In requestHandler'); // logs last if there is a request
-  response.end(`Requested Path: ${request.url} \nRequest Method: ${request.method}`);
+
+  if (request.url === "/") {
+    response.end("Welcome");
+  } else if (request.url === "/url") {
+    response.end("here are some URLs");
+  } else {
+    response.statusCode = 404;
+    // response.end(`Requested Path: ${request.url} \nRequest Method: ${request.method}`);
+    response.end("404 Page Not Found");
+  }
+  
 };
 
 const server = http.createServer(requestHandler);
