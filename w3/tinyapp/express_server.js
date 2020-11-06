@@ -74,8 +74,9 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   console.log('req = ', req.params);
   const shortToDelete = req.params.shortURL;
   delete urlDatabase[shortToDelete];
-  
+
   res.redirect("/urls");
+  //test with: curl -X POST "http://localhost:8080/urls/9sm5xK/delete" or visiting pages and clicking delete in the browser!
 })
 
 
