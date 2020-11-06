@@ -67,17 +67,25 @@ app.get("/u/:shortURL", (req, res) => {
   const longURL = urlDatabase[shortURL];
 
   res.redirect(longURL);
-})
+});
+
+//route to EDIT the longURL
+app.post("/urls/:id", (req, res) => {
+  const short = req.params.id;
+  const long = req.body.longURL; // info from inputs in forms are passed along in the request body!!
+  urlDatabase[short] = long;
+
+  res.redirect("/urls")
+});
 
 // removes URL resource from the My URLS page when delete button is clicked, then redirects to the urls_index view
 app.post("/urls/:shortURL/delete", (req, res) => {
-  console.log('req = ', req.params);
-  const shortToDelete = req.params.shortURL;
+  const shortToDelete = req.params.shortURL; 
   delete urlDatabase[shortToDelete];
 
   res.redirect("/urls");
   //test with: curl -X POST "http://localhost:8080/urls/9sm5xK/delete" or visiting pages and clicking delete in the browser!
-})
+});
 
 
 app.post("/urls", (req, res) => {
