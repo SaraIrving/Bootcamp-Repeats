@@ -30,6 +30,12 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 })
 
+//display the form to create a new shortened url
+//needs to be above urls/:shortURL in code so it takes precedence and the 'new' is not mistaken for a short url!
+app.get("/urls/new", (req, res) => {
+  res.render("urls_new");
+})
+
 app.get("/urls/:shortURL", (req, res) => {
   // Use the shortURL from the route parameter to lookup it's associated longURL from the urlDatabase
   //test in browser and with curl command: curl -i http://localhost:8080/urls/b2xVn2
@@ -38,6 +44,8 @@ app.get("/urls/:shortURL", (req, res) => {
   const templateVars = {shortURL: short, longURL: long};
   res.render("urls_show", templateVars);
 })
+
+
 
 // access via curl request in command line with: curl -i http://localhost:8080/hello
 
