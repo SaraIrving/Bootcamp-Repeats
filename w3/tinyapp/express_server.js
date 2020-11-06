@@ -69,6 +69,16 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(longURL);
 })
 
+// removes URL resource from the My URLS page when delete button is clicked, then redirects to the urls_index view
+app.post("/urls/:shortURL/delete", (req, res) => {
+  console.log('req = ', req.params);
+  const shortToDelete = req.params.shortURL;
+  delete urlDatabase[shortToDelete];
+  
+  res.redirect("/urls");
+})
+
+
 app.post("/urls", (req, res) => {
   //update urlDatabase with data submitted in the post request
   //longURL is found in req.body
@@ -79,6 +89,8 @@ app.post("/urls", (req, res) => {
   //redirect the user to show the new shortURL that was just generated for them
   res.redirect(`/urls/${short}`);
 });
+
+
 
 
 
