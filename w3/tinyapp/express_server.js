@@ -25,8 +25,17 @@ app.get("/hello", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
+  // variable sent to and EJS template must be sent inside an object!
   const templateVars = {urls:  urlDatabase};
   res.render("urls_index", templateVars);
+})
+
+app.get("/urls/:shortURL", (req, res) => {
+  // Use the shortURL from the route parameter to lookup it's associated longURL from the urlDatabase
+  const short = req.params.shortURL;
+  const long = urlDatabase[short];
+  const templateVars = {shortURL: short, longURL: long};
+  res.render("urls_show", templateVars);
 })
 
 // access via curl request in command line with: curl -i http://localhost:8080/hello
