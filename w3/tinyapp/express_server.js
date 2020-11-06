@@ -62,6 +62,11 @@ app.get("/urls/:shortURL", (req, res) => {
 
 app.post("/urls", (req, res) => {
   console.log('req.body =', req.body);
+  //update urlDatabase with data submitted in the post request
+  const short = generateRandomString();
+  const long = req.body.longURL;
+  urlDatabase[short] = long;
+  console.log('updated database = ', urlDatabase)
   res.send("OK");
 });
 
