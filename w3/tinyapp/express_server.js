@@ -67,7 +67,7 @@ app.post("/urls", (req, res) => {
   const long = req.body.longURL;
   urlDatabase[short] = long;
   console.log('updated database = ', urlDatabase)
-  res.send("OK");
+  res.redirect(`/urls/${short}`);
 });
 
 
