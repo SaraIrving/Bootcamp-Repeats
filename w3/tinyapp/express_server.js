@@ -60,13 +60,23 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
+// route to redirect requests made using the shortURL to take the user to the longURL page on the web 
+app.get("/u/:shortURL", (req, res) => {
+  //shortURL is found in req.params.shortURL!
+  const shortURL = req.params.shortURL;
+  const longURL = urlDatabase[shortURL];
+
+  res.redirect(longURL);
+})
+
 app.post("/urls", (req, res) => {
-  console.log('req.body =', req.body);
   //update urlDatabase with data submitted in the post request
+  //longURL is found in req.body
   const short = generateRandomString();
   const long = req.body.longURL;
   urlDatabase[short] = long;
-  console.log('updated database = ', urlDatabase)
+  
+  //redirect the user to show the new shortURL that was just generated for them
   res.redirect(`/urls/${short}`);
 });
 
