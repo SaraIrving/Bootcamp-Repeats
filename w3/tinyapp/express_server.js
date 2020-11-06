@@ -13,6 +13,18 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+// get 6 alphanumeric characters to form the shortURL
+function generateRandomString() {
+  const options = "1234567890abcdefghijklmnopqrstuvwxyz";
+  let shortURL = "";
+  for (let i = 0; i < 6; i++) {
+    let index = Math.floor(Math.random() * options.length);
+    shortURL += options[index];
+  }
+  return shortURL;
+};
+
+
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
