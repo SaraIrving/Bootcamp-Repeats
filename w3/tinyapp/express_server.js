@@ -74,6 +74,11 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(longURL);
 });
 
+//route to display the register view
+app.get("/register", (req, res) => {
+  res.render("register");
+})
+
 //route to EDIT the longURL
 app.post("/urls/:id", (req, res) => {
   const short = req.params.id;
