@@ -95,7 +95,28 @@ app.get("/register", (req, res) => {
 
   //render the register view
   res.render("register", templateVars);
-})
+});
+
+app.post("/register", (req, res) =>  {
+  const email = req.body.email;
+  const password = req.body.password;
+  const userId = generateRandomString();
+
+  //create a new user object within the users object
+  users[userId] = {id: userId,
+                    email: email,
+                    password: password
+                  };
+  
+  //set a new cookie containing the users newly generated ID
+  res.cookie("user_id", userId);
+
+  //test users object is being correctly updated
+  console.log("users object in REGISTER = ", users)
+
+  //redirect user to urls view
+  res.redirect("/urls");
+});
 
 //route to EDIT the longURL
 app.post("/urls/:id", (req, res) => {
