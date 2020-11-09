@@ -126,6 +126,9 @@ app.post("/logout", (req, res) => {
 
   // redirect user to the urls view 
   res.redirect("/urls");
+
+  // test logout with: curl -X POST -i localhost:8080/logout
+
 });
 
 
