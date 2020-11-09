@@ -120,6 +120,14 @@ app.post("/login", (req, res) => {
   res.redirect("/urls");
 })
 
+app.post("/logout", (req, res) => {
+  // clear the cookie named username
+  res.clearCookie("username");
+
+  // redirect user to the urls view 
+  res.redirect("/urls");
+});
+
 
 
 
