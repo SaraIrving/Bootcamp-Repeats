@@ -45,14 +45,15 @@ app.get("/hello", (req, res) => {
 
 app.get("/urls", (req, res) => {
   // variable sent to and EJS template must be sent inside an object!
-  const templateVars = {urls:  urlDatabase};
+  const templateVars = {urls:  urlDatabase, username: req.cookies.username};
   res.render("urls_index", templateVars);
 });
 
 //display the form to create a new shortened url
 //needs to be above urls/:shortURL in code so it takes precedence and the 'new' is not mistaken for a short url!
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+  const templateVars = {username: req.cookies.username}
+  res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:shortURL", (req, res) => {
@@ -60,7 +61,7 @@ app.get("/urls/:shortURL", (req, res) => {
   //test in browser and with curl command: curl -i http://localhost:8080/urls/b2xVn2
   const short = req.params.shortURL;
   const long = urlDatabase[short];
-  const templateVars = {shortURL: short, longURL: long};
+  const templateVars = {shortURL: short, longURL: long, username: req.cookies.username};
   res.render("urls_show", templateVars);
 });
 
@@ -111,6 +112,9 @@ app.post("/login", (req, res) => {
 
   //set cookie with name: username and value: whatever what inputted by the user 
   res.cookie("username", cookieValue);
+
+  //test cookie has been set with: curl -X POST -i localhost:8080/login -d "username=vanillaice"
+  //will see set cookie response header 
 
   //redirect user to urls view
   res.redirect("/urls");
