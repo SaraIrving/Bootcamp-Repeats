@@ -76,7 +76,10 @@ app.get("/u/:shortURL", (req, res) => {
 
 //route to display the register view
 app.get("/register", (req, res) => {
-  res.render("register");
+  const templateVars = {username: req.cookies.username}
+
+  //render the register view
+  res.render("register", templateVars);
 })
 
 //route to EDIT the longURL
