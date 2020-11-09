@@ -13,7 +13,7 @@
     
     <% console.log('locals = ', locals) %>
     <% if(!username) { %>
-      <form method="POST" action="/login" style="padding: 0 2em;">
+      <form method="POST" action="/login" style="padding: 0 2em;" class="form-inline">
         <div class="form-inline"></div>
           <input placeholder="Username" type="text" class="form-control" style="margin: 0 0.5em;" name="username"/>
           <button type="submit" class="btn btn-outline-dark">Login</button>
@@ -21,7 +21,7 @@
       </form>
    
     <% } else { %>
-      <form method="POST" action="/logout" style="padding: 0 2em;">
+      <form method="POST" action="/logout" style="padding: 0 2em;" class="form-inline">
         <div class="form-inline">
             <p style="margin: 0 0.5em;">Username is: <%= username %> </p>
             <button type="submit" class="btn btn-outline-dark">Logout</button>
