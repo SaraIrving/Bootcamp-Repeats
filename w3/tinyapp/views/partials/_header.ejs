@@ -10,11 +10,17 @@
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
     </div>
+    
     <form method="POST" action="/login" style="padding: 0 2em;">
+     
       <div class="form-inline">
+        <% if(username) { %>
+          <p>Username is: <%= username %> </p>
+        <% } %>
         <input placeholder="Username" type="text" class="form-control" style="margin: 0 0.5em;" name="username"/>
         <button type="submit" class="btn btn-outline-dark">Login</button>
       </div>
     </form>
+ 
   </nav>
 </header>
