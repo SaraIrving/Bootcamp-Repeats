@@ -104,6 +104,18 @@ app.post("/urls", (req, res) => {
 });
 
 
+//handles POST request from the login button in the nav bar
+app.post("/login", (req, res) => {
+  // info from input elements is passed in the request body, key = name attribute of the input element 
+  const cookieValue = req.body.username;
+
+  //set cookie with name: username and value: whatever what inputted by the user 
+  res.cookie("username", cookieValue);
+
+  //redirect user to urls view
+  res.redirect("/urls");
+})
+
 
 
 
