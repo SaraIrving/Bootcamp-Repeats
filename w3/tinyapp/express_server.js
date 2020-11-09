@@ -17,6 +17,21 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+// same data of what users will look like
+const users = { 
+  "userRandomID": {
+    id: "userRandomID", 
+    email: "user@example.com", 
+    password: "purple-monkey-dinosaur"
+  },
+ "user2RandomID": {
+    id: "user2RandomID", 
+    email: "user2@example.com", 
+    password: "dishwasher-funk"
+  }
+};
+
+
 // get 6 alphanumeric characters to form the shortURL
 function generateRandomString() {
   const options = "1234567890abcdefghijklmnopqrstuvwxyz";
