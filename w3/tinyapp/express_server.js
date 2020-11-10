@@ -44,6 +44,17 @@ function generateRandomString() {
 };
 
 
+//looks up a specific user in the users object based on their email
+function getUserByEmail (email, database) {
+
+  for (let userIdKey in database) {
+    if (database[userIdKey].email === email) {
+      return userIdKey;
+    }
+  };
+};
+
+
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
@@ -102,20 +113,32 @@ app.post("/register", (req, res) =>  {
   const password = req.body.password;
   const userId = generateRandomString();
 
-  //create a new user object within the users object
-  users[userId] = {id: userId,
-                    email: email,
-                    password: password
-                  };
-  
-  //set a new cookie containing the users newly generated ID
-  res.cookie("user_id", userId);
+  if (email && password) {
+    //check if they already exist in users
+    if (getUserByEmail(email, users)) {
+      res.status(400).send("The email is already in our database!")
+    } else {
+      // they do not already exist in users
+      //create a new user object within the users object
+      users[userId] = {id: userId,
+        email: email,
+        password: password
+      };
 
-  //test users object is being correctly updated
-  //console.log("users object in REGISTER = ", users)
+      //set a new cookie containing the users newly generated ID
+      res.cookie("user_id", userId);
 
-  //redirect user to urls view
-  res.redirect("/urls");
+      //test users object is being correctly updated
+      //console.log("users object in REGISTER = ", users)
+
+      //redirect user to urls view
+      res.redirect("/urls");
+    };
+
+  } else {
+    //if the email or password is blank
+    res.status(400).send("Email or Password fields are blank, please complete the form!")
+  };
 });
 
 //route to EDIT the longURL
@@ -166,7 +189,7 @@ app.post("/login", (req, res) => {
 
 app.post("/logout", (req, res) => {
   // clear the cookie named username
-  res.clearCookie("username");
+  res.clearCookie("user_id");
 
   // redirect user to the urls view 
   res.redirect("/urls");
