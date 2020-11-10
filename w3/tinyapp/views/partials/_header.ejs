@@ -14,8 +14,8 @@
    
     <% if(!user) { %>
       <div class="navbar-nav">
-        <a class="btn btn-outline-dark" href="/login">Login</a>
-        <a class="btn btn-outline-dark" href="/register">Register</a>
+        <a class="nav-item nav-link"  href="/login">Login</a>
+        <a class="nav-item nav-link"  href="/register">Register</a>
       </div>
     <% } else { %>
       <form method="POST" action="/logout" style="padding: 0 2em;" class="form-inline">
