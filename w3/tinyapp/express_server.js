@@ -108,6 +108,15 @@ app.get("/register", (req, res) => {
   res.render("register", templateVars);
 });
 
+//route to display the login view
+app.get("/login", (req, res) => {
+  const templateVars = {user: users[req.cookies.user_id]}
+
+  //render the login view
+  res.render("login", templateVars);
+
+})
+
 app.post("/register", (req, res) =>  {
   const email = req.body.email;
   const password = req.body.password;
