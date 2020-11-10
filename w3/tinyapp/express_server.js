@@ -60,14 +60,14 @@ app.get("/hello", (req, res) => {
 
 app.get("/urls", (req, res) => {
   // variable sent to and EJS template must be sent inside an object!
-  const templateVars = {urls:  urlDatabase, user: users[req.cookies.userId]};
+  const templateVars = {urls:  urlDatabase, user: users[req.cookies.user_id]};
   res.render("urls_index", templateVars);
 });
 
 //display the form to create a new shortened url
 //needs to be above urls/:shortURL in code so it takes precedence and the 'new' is not mistaken for a short url!
 app.get("/urls/new", (req, res) => {
-  const templateVars = {user: users[req.cookies.userId]}
+  const templateVars = {user: users[req.cookies.user_id]}
   res.render("urls_new", templateVars);
 });
 
@@ -76,7 +76,7 @@ app.get("/urls/:shortURL", (req, res) => {
   //test in browser and with curl command: curl -i http://localhost:8080/urls/b2xVn2
   const short = req.params.shortURL;
   const long = urlDatabase[short];
-  const templateVars = {shortURL: short, longURL: long, user: users[req.cookies.userId]};
+  const templateVars = {shortURL: short, longURL: long, user: users[req.cookies.user_id]};
   res.render("urls_show", templateVars);
 });
 
@@ -91,7 +91,7 @@ app.get("/u/:shortURL", (req, res) => {
 
 //route to display the register view
 app.get("/register", (req, res) => {
-  const templateVars = {user: users[req.cookies.userId]}
+  const templateVars = {user: users[req.cookies.user_id]}
 
   //render the register view
   res.render("register", templateVars);
