@@ -184,13 +184,33 @@ app.post("/urls", (req, res) => {
 //handles POST request from the login button in the nav bar
 app.post("/login", (req, res) => {
   // info from input elements is passed in the request body, key = name attribute of the input element 
-  const cookieValue = req.body.username;
+
 
   //set cookie with name: username and value: whatever what inputted by the user 
   //res.cookie("username", cookieValue);
 
   //test cookie has been set with: curl -X POST -i localhost:8080/login -d "username=vanillaice"
   //will see set cookie response header 
+
+  const email = req.body.email;
+  const password = req.body.password;
+  const userId = getUserByEmail(email, users);
+
+  //check that there is a user with the provided email
+  if (userId) {
+    //check that the password matches what is stored for that user
+    if (users[userId].password === password) {
+      //if password matches, set a cookie with the userId
+      res.cookie("user_id", userId);
+
+      //redirect the user to urls view
+      res.redirect("/urls")
+    } else {
+      res.status(403).send("The password does not match!")
+    }
+  } else {
+    res.status(403).send("There is no user with that email in our database!")
+  }
 
   //redirect user to urls view
   res.redirect("/urls");
