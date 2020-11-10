@@ -13,13 +13,10 @@
     
    
     <% if(!user) { %>
-      <form method="POST" action="/login" style="padding: 0 2em;" class="form-inline">
-        <div class="form-inline"></div>
-          <input placeholder="Username" type="text" class="form-control" style="margin: 0 0.5em;" name="username"/>
-          <button type="submit" class="btn btn-outline-dark">Login</button>
-        </div>
-      </form>
-   
+      <div class="navbar-nav">
+        <a class="btn btn-outline-dark" href="/login">Login</a>
+        <a class="btn btn-outline-dark" href="/register">Register</a>
+      </div>
     <% } else { %>
       <form method="POST" action="/logout" style="padding: 0 2em;" class="form-inline">
         <div class="form-inline">
