@@ -187,7 +187,7 @@ app.post("/login", (req, res) => {
 
 
   //set cookie with name: username and value: whatever what inputted by the user 
-  //res.cookie("username", cookieValue);
+  //res.cookie("", cookieValue);
 
   //test cookie has been set with: curl -X POST -i localhost:8080/login -d "username=vanillaice"
   //will see set cookie response header 
@@ -217,7 +217,7 @@ app.post("/login", (req, res) => {
 })
 
 app.post("/logout", (req, res) => {
-  // clear the cookie named username
+  // clear the cookie named user_id
   res.clearCookie("user_id");
 
   // redirect user to the urls view 
