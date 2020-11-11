@@ -72,7 +72,17 @@ function urlsForUser(id, database) {
     };
   };
   return usersURLS;
-}
+};
+
+// determines if the shortURL in question belongs to the currently logged in user, returns a boolean 
+function doesShortUrlBelongToUser(id, short, database) {
+  for (shortURL in database) {
+    if (database[shortURL].userID === id) {
+      return true;
+    }
+  };
+  return false;
+};
 
 
 app.get("/", (req, res) => {
@@ -198,6 +208,7 @@ app.post("/register", (req, res) =>  {
     res.status(400).send("Email or Password fields are blank, please complete the form!")
   };
 });
+
 
 //route to EDIT the longURL
 app.post("/urls/:id", (req, res) => {
