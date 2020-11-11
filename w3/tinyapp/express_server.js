@@ -229,11 +229,24 @@ app.post("/urls/:id", (req, res) => {
 // removes URL resource from the My URLS page when delete button is clicked, then redirects to the urls_index view
 app.post("/urls/:shortURL/delete", (req, res) => {
   const shortToDelete = req.params.shortURL; 
-  delete urlDatabase[shortToDelete];
+  const userId = req.cookies.user_id;
 
-  res.redirect("/urls");
+  //check that the shortURL they want to delete belongs to the logged in user, otherwise send error prompt
+  const doesUrlBelongToUser = doesShortUrlBelongToUser(userId, shortToDelete, urlDatabase);
+
+  if (doesUrlBelongToUser === true) {
+    delete urlDatabase[shortToDelete];
+
+    res.redirect("/urls");
+  } else {
+    res.status(403).send("You cannot delete URLs that do not belong to you!");
+  };
+
+
+ 
   //test with: curl -X POST "http://localhost:8080/urls/9sm5xK/delete" or visiting pages and clicking delete in the browser!
 });
+
 
 //make a new shortURL
 app.post("/urls", (req, res) => {
