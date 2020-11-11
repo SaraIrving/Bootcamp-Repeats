@@ -61,6 +61,19 @@ function getUserByEmail (email, database) {
   };
 };
 
+// this function returns an object which contains all the urls associated with the userId provided 
+function urlsForUser(id, database) {
+
+  let usersURLS = {}
+
+  for (shortURL in database) {
+    if(database[shortURL].userID === id) {
+      usersURLS[shortURL] = database[shortURL];
+    };
+  };
+  return usersURLS;
+}
+
 
 app.get("/", (req, res) => {
   res.send("Hello!");
@@ -78,7 +91,14 @@ app.get("/hello", (req, res) => {
 
 app.get("/urls", (req, res) => {
   // variable sent to and EJS template must be sent inside an object!
-  const templateVars = {urls:  urlDatabase, user: users[req.cookies.user_id]};
+  
+  //determine the userID of the logged in user
+  const userId = req.cookies.user_id;
+
+
+
+
+  const templateVars = {urls:  urlDatabase, user: users[userId]};
   res.render("urls_index", templateVars);
 });
 
