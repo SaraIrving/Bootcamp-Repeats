@@ -101,7 +101,7 @@ app.get("/urls/:shortURL", (req, res) => {
   // Use the shortURL from the route parameter to lookup it's associated longURL from the urlDatabase
   //test in browser and with curl command: curl -i http://localhost:8080/urls/b2xVn2
   const short = req.params.shortURL;
-  const long = urlDatabase[short];
+  const long = urlDatabase[short].longURL;
   const templateVars = {shortURL: short, longURL: long, user: users[req.cookies.user_id]};
   res.render("urls_show", templateVars);
 });
