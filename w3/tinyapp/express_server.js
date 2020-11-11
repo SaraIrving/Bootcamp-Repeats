@@ -77,7 +77,7 @@ function urlsForUser(id, database) {
 // determines if the shortURL in question belongs to the currently logged in user, returns a boolean 
 function doesShortUrlBelongToUser(id, short, database) {
   for (shortURL in database) {
-    if (database[shortURL].userID === id) {
+    if (database[shortURL].userID === id && shortURL === short) {
       return true;
     }
   };
