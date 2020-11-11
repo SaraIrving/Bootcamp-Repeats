@@ -87,10 +87,7 @@ app.get("/urls/new", (req, res) => {
   } else {
     //if they are not signed in, redirect to the login page
     res.redirect("/login");
-  }
-
-  
-  res.render("urls_new", templateVars);
+  };
 });
 
 app.get("/urls/:shortURL", (req, res) => {
