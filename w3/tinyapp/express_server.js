@@ -122,7 +122,20 @@ app.get("/urls/:shortURL", (req, res) => {
   //test in browser and with curl command: curl -i http://localhost:8080/urls/b2xVn2
   const short = req.params.shortURL;
   const long = urlDatabase[short].longURL;
-  const templateVars = {shortURL: short, longURL: long, user: users[req.cookies.user_id]};
+  const userId = req.cookies.user_id;
+
+  let urlBelongsToUser;
+  if (urlDatabase[short].userID === userId) {
+    urlBelongsToUser = true;
+  } else {
+    urlBelongsToUser = false;
+  }
+
+  const templateVars = {shortURL: short, 
+    longURL: long, 
+    user: users[userId],
+    urlBelongsToUser: urlBelongsToUser};
+
   res.render("urls_show", templateVars);
 });
 
