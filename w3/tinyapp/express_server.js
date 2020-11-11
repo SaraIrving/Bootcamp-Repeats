@@ -95,10 +95,10 @@ app.get("/urls", (req, res) => {
   //determine the userID of the logged in user
   const userId = req.cookies.user_id;
 
+  //get only the urls of the logged in user
+  const usersURLS = urlsForUser(userId, urlDatabase);
 
-
-
-  const templateVars = {urls:  urlDatabase, user: users[userId]};
+  const templateVars = {urls:  usersURLS, user: users[userId]};
   res.render("urls_index", templateVars);
 });
 
