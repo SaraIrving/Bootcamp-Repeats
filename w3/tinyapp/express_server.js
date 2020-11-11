@@ -78,7 +78,18 @@ app.get("/urls", (req, res) => {
 //display the form to create a new shortened url
 //needs to be above urls/:shortURL in code so it takes precedence and the 'new' is not mistaken for a short url!
 app.get("/urls/new", (req, res) => {
-  const templateVars = {user: users[req.cookies.user_id]}
+  const userId = req.cookies.user_id;
+  const templateVars = {user: users[userId]};
+
+  // if the user is logged in and there is a cookie with their userID present, let them visit the urls_new view
+  if (userId) {
+    res.render("urls_new", templateVars);
+  } else {
+    //if they are not signed in, redirect to the login page
+    res.redirect("/login");
+  }
+
+  
   res.render("urls_new", templateVars);
 });
 
