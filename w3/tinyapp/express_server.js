@@ -285,7 +285,7 @@ app.post("/login", (req, res) => {
   //check that there is a user with the provided email
   if (userId) {
     //check that the password matches what is stored for that user
-    if (users[userId].password === password) {
+    if (bcrypt.compareSync(password, users[userId].password)) {
       //if password matches, set a cookie with the userId
       res.cookie("user_id", userId);
 
