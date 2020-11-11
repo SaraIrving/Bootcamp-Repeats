@@ -131,8 +131,13 @@ app.get("/urls/:shortURL", (req, res) => {
   // Use the shortURL from the route parameter to lookup it's associated longURL from the urlDatabase
   //test in browser and with curl command: curl -i http://localhost:8080/urls/b2xVn2
   const short = req.params.shortURL;
-  const long = urlDatabase[short].longURL;
   const userId = req.cookies.user_id;
+
+  //determine if the shortURL exists in the database, if it does, use it to find the associated longURL
+  let long;
+  if (urlDatabase[short]) {
+    long = urlDatabase[short].longURL;
+  };
 
   //determine if the short url belongs to the currently logged in user, pass this as a boolean to the template
   let urlBelongsToUser = doesShortUrlBelongToUser(userId, short, urlDatabase);
@@ -241,8 +246,6 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   } else {
     res.status(403).send("You cannot delete URLs that do not belong to you!");
   };
-
-
  
   //test with: curl -X POST "http://localhost:8080/urls/9sm5xK/delete" or visiting pages and clicking delete in the browser!
 });
