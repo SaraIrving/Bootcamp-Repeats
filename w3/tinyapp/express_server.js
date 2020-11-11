@@ -207,12 +207,23 @@ app.post("/register", (req, res) =>  {
 
 //route to EDIT the longURL
 app.post("/urls/:id", (req, res) => {
-  const short = req.params.id;
-  const long = req.body.longURL; // info from inputs in forms are passed along in the request body!!
-  const userId = req.cookies.user_id;
-  urlDatabase[short] = {longURL: long, userID: userId};
 
-  res.redirect("/urls")
+  const short = req.params.id;
+  const userId = req.cookies.user_id;
+
+  //check that the shortURL (associated with the long URL they want to edit) belongs to the logged in user. Otherwise send error prompt
+  const doesUrlBelongToUser = doesShortUrlBelongToUser(userId, short, urlDatabase);
+  
+  if (doesUrlBelongToUser === true) {
+    const long = req.body.longURL; // info from inputs in forms are passed along in the request body!!
+
+    urlDatabase[short] = {longURL: long, userID: userId};
+
+    res.redirect("/urls")
+  } else {
+    res.status(403).send("You cannot edit URLs that do not belong to you!")
+  };
+
 });
 
 // removes URL resource from the My URLS page when delete button is clicked, then redirects to the urls_index view
