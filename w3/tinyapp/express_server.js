@@ -124,12 +124,13 @@ app.get("/urls/:shortURL", (req, res) => {
   const long = urlDatabase[short].longURL;
   const userId = req.cookies.user_id;
 
+  //determine if the short url belongs to the currently logged in user, pass this as a boolean to the template
   let urlBelongsToUser;
   if (urlDatabase[short].userID === userId) {
     urlBelongsToUser = true;
   } else {
     urlBelongsToUser = false;
-  }
+  };
 
   const templateVars = {shortURL: short, 
     longURL: long, 
