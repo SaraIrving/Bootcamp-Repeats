@@ -12,10 +12,17 @@ app.use(bodyParser.urlencoded({extended: true})); //The body-parser library will
 app.set("view engine", "ejs") //set ejs as the view engine 
 
 //sample of what data will look like
+// const urlDatabase = {
+//   "b2xVn2": "http://www.lighthouselabs.ca",
+//   "9sm5xK": "http://www.google.com"
+// };
+
+// updated data structure of the urlDatabase
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
+  i3BoGr: { longURL: "https://www.google.ca", userID: "aJ48lW" }
 };
+
 
 // same data of what users will look like
 const users = { 
