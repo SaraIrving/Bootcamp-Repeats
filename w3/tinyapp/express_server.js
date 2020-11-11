@@ -169,7 +169,8 @@ app.post("/register", (req, res) =>  {
 app.post("/urls/:id", (req, res) => {
   const short = req.params.id;
   const long = req.body.longURL; // info from inputs in forms are passed along in the request body!!
-  urlDatabase[short] = long;
+  const userId = req.cookies.user_id;
+  urlDatabase[short] = {longURL: long, userID: userId};
 
   res.redirect("/urls")
 });
