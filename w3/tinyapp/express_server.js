@@ -3,6 +3,7 @@ const app = express();
 const PORT = 8080; //default port
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
 
 
 app.use(cookieParser()); //A package called cookie-parser serves as Express middleware that facilitates working with cookies. cookie-parser helps us read the values from the cookie. Only using signed cookies!
@@ -179,9 +180,10 @@ app.get("/login", (req, res) => {
 app.post("/register", (req, res) =>  {
   const email = req.body.email;
   const password = req.body.password;
+  const hashedPassword = bcrypt.hashSync(password, 10); // 10 is the number of rounds of salting done to the password, see the bcrypt documentation for more info
   const userId = generateRandomString();
 
-  if (email && password) {
+  if (email && hashedPassword) {
     //check if they already exist in users
     if (getUserByEmail(email, users)) {
       res.status(400).send("The email is already in our database!")
@@ -190,7 +192,7 @@ app.post("/register", (req, res) =>  {
       //create a new user object within the users object
       users[userId] = {id: userId,
         email: email,
-        password: password
+        password: hashedPassword
       };
 
       //set a new cookie containing the users newly generated ID
