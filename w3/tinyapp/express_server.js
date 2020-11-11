@@ -184,13 +184,14 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   //test with: curl -X POST "http://localhost:8080/urls/9sm5xK/delete" or visiting pages and clicking delete in the browser!
 });
 
-
+//make a new shortURL
 app.post("/urls", (req, res) => {
   //update urlDatabase with data submitted in the post request
   //longURL is found in req.body
   const short = generateRandomString();
   const long = req.body.longURL;
-  urlDatabase[short] = long;
+  const userId = req.cookies.user_id;
+  urlDatabase[short] = {longURL: long, userID: userId};
   
   //redirect the user to show the new shortURL that was just generated for them
   res.redirect(`/urls/${short}`);
