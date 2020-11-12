@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 //const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
+const { getUserByEmail } = require('./helpers');
+
+
 
 app.use(cookieSession({
   name: 'session',
@@ -57,15 +60,15 @@ function generateRandomString() {
 };
 
 
-//looks up a specific user in the users object based on their email
-function getUserByEmail (email, database) {
+// //looks up a specific user in the users object based on their email
+// function getUserByEmail (email, database) {
 
-  for (let userIdKey in database) {
-    if (database[userIdKey].email === email) {
-      return userIdKey;
-    }
-  };
-};
+//   for (let userIdKey in database) {
+//     if (database[userIdKey].email === email) {
+//       return userIdKey;
+//     }
+//   };
+// };
 
 // this function returns an object which contains all the urls associated with the userId provided 
 function urlsForUser(id, database) {
