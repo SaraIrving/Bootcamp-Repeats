@@ -4,7 +4,8 @@ function getUserByEmail(email, database) {
 
   for (let userIdKey in database) {
     if (database[userIdKey].email === email) {
-      return userIdKey;
+      console.log("IN FUNCTION, return = ", database[userIdKey])
+      return database[userIdKey];
     }
   };
 };
