@@ -289,15 +289,15 @@ app.post("/login", (req, res) => {
 
   const email = req.body.email;
   const password = req.body.password;
-  const userId = getUserByEmail(email, users);
-
+  const user = getUserByEmail(email, users);
+  
   //check that there is a user with the provided email
-  if (userId) {
+  if (user) {
     //check that the password matches what is stored for that user
-    if (bcrypt.compareSync(password, users[userId].password)) {
+    if (bcrypt.compareSync(password, users[user.id].password)) {
       //if password matches, set a cookie with the userId
       //res.cookie("user_id", userId);
-      req.session.user_id = userId;
+      req.session.user_id = user.id;
 
       //redirect the user to urls view
       res.redirect("/urls")
