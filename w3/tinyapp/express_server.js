@@ -109,7 +109,7 @@ app.get("/urls", (req, res) => {
   // variable sent to and EJS template must be sent inside an object!
   
   //determine the userID of the logged in user
-  const userId = req.cookies.user_id;
+  const userId = req.session.user_id;
 
   //get only the urls of the logged in user
   const usersURLS = urlsForUser(userId, urlDatabase);
@@ -121,7 +121,7 @@ app.get("/urls", (req, res) => {
 //display the form to create a new shortened url
 //needs to be above urls/:shortURL in code so it takes precedence and the 'new' is not mistaken for a short url!
 app.get("/urls/new", (req, res) => {
-  const userId = req.cookies.user_id;
+  const userId = req.session.user_id;
   const templateVars = {user: users[userId]};
 
   // if the user is logged in and there is a cookie with their userID present, let them visit the urls_new view
@@ -137,7 +137,7 @@ app.get("/urls/:shortURL", (req, res) => {
   // Use the shortURL from the route parameter to lookup it's associated longURL from the urlDatabase
   //test in browser and with curl command: curl -i http://localhost:8080/urls/b2xVn2
   const short = req.params.shortURL;
-  const userId = req.cookies.user_id;
+  const userId = req.session.user_id;
 
   //determine if the shortURL exists in the database, if it does, use it to find the associated longURL
   let long;
@@ -167,7 +167,7 @@ app.get("/u/:shortURL", (req, res) => {
 
 //route to display the register view
 app.get("/register", (req, res) => {
-  const templateVars = {user: users[req.cookies.user_id]}
+  const templateVars = {user: users[req.session.user_id]}
 
   //render the register view
   res.render("register", templateVars);
@@ -175,7 +175,7 @@ app.get("/register", (req, res) => {
 
 //route to display the login view
 app.get("/login", (req, res) => {
-  const templateVars = {user: users[req.cookies.user_id]}
+  const templateVars = {user: users[req.session.user_id]}
 
   //render the login view
   res.render("login", templateVars);
@@ -201,7 +201,8 @@ app.post("/register", (req, res) =>  {
       };
 
       //set a new cookie containing the users newly generated ID
-      res.cookie("user_id", userId);
+      //res.cookie("user_id", userId);
+      req.session.user_id = userId;
 
       //test users object is being correctly updated
       //console.log("users object in REGISTER = ", users)
@@ -221,7 +222,7 @@ app.post("/register", (req, res) =>  {
 app.post("/urls/:id", (req, res) => {
 
   const short = req.params.id;
-  const userId = req.cookies.user_id;
+  const userId = req.session.user_id;
 
   //check that the shortURL (associated with the long URL they want to edit) belongs to the logged in user. Otherwise send error prompt
   const doesUrlBelongToUser = doesShortUrlBelongToUser(userId, short, urlDatabase);
@@ -241,7 +242,7 @@ app.post("/urls/:id", (req, res) => {
 // removes URL resource from the My URLS page when delete button is clicked, then redirects to the urls_index view
 app.post("/urls/:shortURL/delete", (req, res) => {
   const shortToDelete = req.params.shortURL; 
-  const userId = req.cookies.user_id;
+  const userId = req.session.user_id;
 
   //check that the shortURL they want to delete belongs to the logged in user, otherwise send error prompt
   const doesUrlBelongToUser = doesShortUrlBelongToUser(userId, shortToDelete, urlDatabase);
@@ -264,7 +265,7 @@ app.post("/urls", (req, res) => {
   //longURL is found in req.body
   const short = generateRandomString();
   const long = req.body.longURL;
-  const userId = req.cookies.user_id;
+  const userId = req.session.user_id;
   urlDatabase[short] = {longURL: long, userID: userId};
   
   //redirect the user to show the new shortURL that was just generated for them
@@ -292,7 +293,8 @@ app.post("/login", (req, res) => {
     //check that the password matches what is stored for that user
     if (bcrypt.compareSync(password, users[userId].password)) {
       //if password matches, set a cookie with the userId
-      res.cookie("user_id", userId);
+      //res.cookie("user_id", userId);
+      req.session.user_id = userId;
 
       //redirect the user to urls view
       res.redirect("/urls")
@@ -309,7 +311,8 @@ app.post("/login", (req, res) => {
 
 app.post("/logout", (req, res) => {
   // clear the cookie named user_id
-  res.clearCookie("user_id");
+  //res.clearCookie("user_id");
+  req.session.user_id = null;
 
   // redirect user to the urls view 
   res.redirect("/urls");
