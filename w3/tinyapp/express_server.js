@@ -2,11 +2,16 @@ const express = require('express');
 const app = express();
 const PORT = 8080; //default port
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+//const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
+const cookieSession = require('cookie-session');
 
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'] //keys can be any string, just pick something
+}));
 
-app.use(cookieParser()); //A package called cookie-parser serves as Express middleware that facilitates working with cookies. cookie-parser helps us read the values from the cookie. Only using signed cookies!
+//app.use(cookieParser()); //A package called cookie-parser serves as Express middleware that facilitates working with cookies. cookie-parser helps us read the values from the cookie. Only using signed cookies!
 
 app.use(bodyParser.urlencoded({extended: true})); //The body-parser library will convert the request body from a Buffer into string that we can read. It will then add the data to the req(request) object under the key body. 
 
