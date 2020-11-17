@@ -2,6 +2,20 @@
 <html lang="en">
 <head>
   <title>Ajax Example</title>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script>
+    $(function() {
+      const $button = $('#load-more-posts');
+      $button.on('click', function() {
+        console.log('Button clicked, performing ajax call...');
+        $.ajax('more-posts.html', {method: 'GET'})
+        .then(function(morePostsHtml) {
+          console.log('Success: ', morePostsHtml);
+          $button.replaceWith(morePostsHtml);
+        });
+      });
+    });
+  </script>
 </head>
 <body>
   <section>
