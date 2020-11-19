@@ -1,11 +1,11 @@
 // linear search function 
 
 function search(array, item) {
-  let index = null;
+  let index = null; // 1
 
-  for(let i = 0; i < array.length; i++) {
-    if(item === array[i]) {
-      index = i;
+  for(let i = 0; i < array.length; i++) { // 1   n+1  N
+    if(item === array[i]) { // n
+      index = i; // only happens once if found so don't count in worst case scenario
       break;
     }
   }
@@ -44,3 +44,5 @@ function binarySearch(array, item) {
     }
   }
 }
+
+// Remember that every time we check a number, we cut the array in half. So our loop will run log n times instead of n times.
