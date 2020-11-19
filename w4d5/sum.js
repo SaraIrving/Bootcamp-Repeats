@@ -14,3 +14,28 @@ function arrayContainsSum(array, sum) {
   return false; // 1 
 }
 // run time: 3 + 5n + 4n^2
+
+// The same array will run in n^2 time while the separate arrays will run in a * b time.
+
+// Linear approach 
+function linearArrayContainsSum(array, sum) {
+
+  let i = 0;
+  let ii = array.length - 1;
+
+  while(i <= ii) {
+    const element1 = array[i];
+    const element2 = array[ii];
+    const currentSum = element1 + element2 ;
+
+    if(currentSum === sum) {
+      return true;
+    } else if (currentSum > sum) {
+      ii--;
+    } else {
+      i++;
+    }
+  }
+  return false;
+
+}
